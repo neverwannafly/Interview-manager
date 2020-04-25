@@ -12,7 +12,10 @@ $(document).ready(function(){
     $('body').on('click', 'tr', event=>{
         $("#editInterview").modal();
         let el = event.srcElement || event.target;
-        let interviewid = $(el).parent().parent().children().find('span').attr('id');
+        let interviewid = $(el).parent().children().find('span').attr('id');
+        if (interviewid == undefined) {
+            interviewid = $(el).parent().parent().children().find('span').attr('id')
+        }
         console.log(interviewid);
         $("#interviewid").val(interviewid);
         $.ajax({
