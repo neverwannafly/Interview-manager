@@ -82,7 +82,9 @@ html
                                     i.fa.fa-calendar
                     .input-group.input-group-md.mb-3
                         div.input-group-prepend
-                            span(class="input-group-text" id="inputGroup-sizing-sm") Applicants &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: 
+                            span(class="input-group-text" id="inputGroup-sizing-sm") 
+                                button(type="button" class="btn btn-warning" data-toggle="tooltip" data-placement="top" title="Tooltip on top") Write participants name in comma seperated fashion
+                                .div &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: 
                         input(class="form-control" id="userids" type="text" name="userids")
                 .modal-footer
                     button.btn.btn-secondary(type='button', data-dismiss='modal') Close
