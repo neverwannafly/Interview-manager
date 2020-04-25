@@ -21,8 +21,8 @@ router.get('/all', async (req, res)=>{
         for (let i=0; i<data.length; i++) {
             resp.push([
                 `<span class='interviews' id='${data[i].id}'>${data[i].title}</span>`,
-                String(data[i].start).substring(4,24),
-                String(data[i].end).substring(4,24),
+                String(new Date(data[i].start.getTime())).substring(4,24),
+                String(new Date(data[i].end.getTime())).substring(4,24),
                 await UserInterview.find({interviewid: data[i].id}).then(async data=>{
                     let resp = [];
                     for (let i=0; i<data.length; i++) {
@@ -44,8 +44,8 @@ router.get('/:id', async (req, res)=>{
     Interview.findById(ObjectID(id)).then(async data=>{
         res.json({
             title: data.title,
-            start: new Date(data.start).toLocaleDateString() + " " + new Date(data.start).toLocaleTimeString(),
-            end: new Date(data.end).toLocaleDateString() + " " + new Date(data.end).toLocaleTimeString(),
+            start: new Date(data.start.getTime()-data.diff*60000),
+            end: new Date(data.end.getTime()-data.diff*60000),
         });
     });
 });
@@ -88,10 +88,12 @@ router.post('/schedule', async (req, res) => {
     await checkConflicts(userids, start, end).then(async data => {
         if (!data) {
             // create a new interview
+            const now = new Date();
             const params = {
                 start: start,
                 end: end,
                 title: title,
+                diff: now.getTimezoneOffset(),
             };
             await new Interview(params).save().then(async data => {
                 for (let i=0; i<userids.length; i++) {

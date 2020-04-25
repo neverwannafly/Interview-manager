@@ -12,6 +12,9 @@ const InterviewSchema = new Schema({
     end : {
         type: Date,
     },
+    diff: {
+        type: Date,
+    }
 });
 
 module.exports = Post = mongoose.model('interview', InterviewSchema);
