@@ -81,7 +81,6 @@ $(document).ready(function(){
             const type = 'danger';
             const message = 'Please choose a proper date!';
             showReponse(type, message, INTERVIEW_ALERT);
-            return;
         }
         
         // Try parsing usernames
@@ -250,7 +249,7 @@ function clearReponse(htmlClass) {
 
 function parseDate(date) {
     const year = parseInt(date.substring(0,4));
-    const month = parseInt(date.substring(5,7));
+    const month = parseInt(date.substring(5,7))-1;
     const day = parseInt(date.substring(8,10));
     const hour = parseInt(date.substring(11,13));
     const min = parseInt(date.substring(14,16));
