@@ -57,7 +57,7 @@ router.delete('/:interviewid', async (req, res) => {
     const interviewid = req.params.interviewid;
     const response = {};
     console.log(interviewid);
-    await Interview.deleteOne({_id:ObjectID(interviewid)}).then(async data=>{
+    await Interview.deleteOne({_id:ObjectID(interviewid)}).then(async _=>{
         response.data = 'delete successful!';
         await UserInterview.deleteMany({interviewid:interviewid}).then(data=>{
             response.userints = data;
@@ -80,10 +80,13 @@ router.post('/schedule', async (req, res) => {
 
     try {
         userids = await parseUserIds(req.body['usernames[]']);
+        console.log(userids);
     } catch {
-        response.error = 'haha';
-        userids = [];
+        userids = ['*'];
+        console.log(userids);
     }
+
+    console.log("hello");
     
     await checkConflicts(userids, start, end).then(async data => {
         if (!data) {
@@ -110,6 +113,9 @@ router.post('/schedule', async (req, res) => {
         } else {
             response.error = 'Cannot create interview instance as one or many users are busy';
         };
+    }).catch(err=>{
+        response.error = err.message;
+        console.log(response);
     })
     res.json(response);
 });

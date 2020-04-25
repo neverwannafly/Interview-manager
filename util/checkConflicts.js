@@ -7,7 +7,6 @@ const checkConflicts = async function(userId, startTime, endTime, exempt = null)
         'userid': { $in: userId }
     }).then(async function(userInterview){
         for (let i=0; i<userInterview.length; i++) {
-            console.log(userInterview[i].interviewid,userInterview[i].userid, exempt);
             if (userInterview[i].interviewid == exempt) {
                 continue;
             }
@@ -22,6 +21,8 @@ const checkConflicts = async function(userId, startTime, endTime, exempt = null)
                 }
             });
         }
+    }).catch(_=>{
+        throw new Error("Some or more usernames are wrong!");
     });
     return conflicts;
 }

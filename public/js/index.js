@@ -81,6 +81,7 @@ $(document).ready(function(){
             const type = 'danger';
             const message = 'Please choose a proper date!';
             showReponse(type, message, INTERVIEW_ALERT);
+            return;
         }
         
         // Try parsing usernames
@@ -109,9 +110,8 @@ $(document).ready(function(){
                     const type = `success`;
                     const message = `Interview Scheduled successfully!`;
                     showReponse(type, message, INTERVIEW_ALERT);
+                    location.reload();
                 }
-                console.log(data);
-                location.reload();
             },
         });
         event.preventDefault();

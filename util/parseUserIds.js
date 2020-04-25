@@ -8,6 +8,7 @@ const parseUserIds = async function(usernames) {
         }).then(data=>{
             if (data) {
                 userids.push(data.id);
+                console.log(userids);
             } else {
                 throw new Error(`Please check the user names you've entered!`);
             }
