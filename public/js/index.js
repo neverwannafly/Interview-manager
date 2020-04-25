@@ -109,10 +109,9 @@ $(document).ready(function(){
                     showReponse(type, message, INTERVIEW_ALERT);
                 }
                 console.log(data);
+                location.reload();
             },
         });
-
-        location.reload();
         event.preventDefault();
     });
 
@@ -163,10 +162,10 @@ $(document).ready(function(){
                     showReponse(type, message, EDIT_ALERT);
                 }
                 console.log(data);
+                location.reload();
             },
         });
 
-        location.reload();
         event.preventDefault();
     });
 
