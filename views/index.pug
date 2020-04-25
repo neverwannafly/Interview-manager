@@ -1,0 +1,130 @@
+doctype html
+html
+    head
+        title=title
+        meta(name="viewport", content="width=device-width, initial-scale=1.0")
+        link(rel='stylesheet', href='modules/codemirror/lib/codemirror.css')
+        link(rel="stylesheet", href="modules/codemirror/theme/twilight.css")
+        link(rel="stylesheet", href="modules/bootstrap/dist/css/bootstrap.min.css")
+        link(rel="stylesheet", href="static/css/index.css")
+        link(rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/css/tempusdominus-bootstrap-4.min.css")        
+        link(rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css")
+    body
+    div.container-fluid#wrapper
+        div.container-fluid#navbar
+            nav.navbar.navbar-expand-lg.navbar-dark.bg-dark
+                a.navbar-brand(href='#') Interview Manager
+                button.navbar-toggler(type='button' data-toggle='collapse' data-target='#navbarNav' aria-controls='navbarNav' aria-expanded='false' aria-label='Toggle navigation')
+                    span.navbar-toggler-icon
+                #navbarNav.collapse.navbar-collapse
+                    ul.navbar-nav
+                        li.nav-item.active
+                            a.nav-link(href='#')
+                                | Home 
+                                span.sr-only (current)
+                        li.nav-item
+                            a.nav-link(href='#' data-toggle='modal', data-target='#createInterview') Schedule Interview
+                        li.nav-item
+                            a.nav-link(href='#' data-toggle='modal', data-target='#createUser') Add User
+        div.container-lg#interviews
+            table#interviews-data.display
+                thead
+                    tr
+                        th Title
+                        th Start Time
+                        th End Time
+                        th Participants
+
+    #createUser.modal.fade(tabindex='-1', role='dialog', aria-labelledby='createUserLabel', aria-hidden='true')
+        .modal-dialog(role='document').modal-dialog-centered
+            .modal-content
+                .modal-header
+                    h5#createUserLabel.modal-title Add User
+                    button.close(type='button', data-dismiss='modal', aria-label='Close')
+                    span(aria-hidden='true') ×
+                .modal-body
+                    #user-alert
+                    div.input-group.input-group-sm.mb-3
+                        div.input-group-prepend
+                            span(class="input-group-text" id="inputGroup-sizing-sm") Username
+                        input(class="form-control" id="username" type="text" name="username")
+                .modal-footer
+                    button.btn.btn-secondary(type='button', data-dismiss='modal') Close
+                    button#create-user.btn.btn-primary(type='button') Add
+    #createInterview.modal.fade(tabindex='-1', role='dialog', aria-labelledby='createInterviewLabel', aria-hidden='true')
+        .modal-dialog(role='document').modal-dialog-centered
+            .modal-content
+                .modal-header
+                    h5#createInterviewLabel.modal-title Schedule Interview
+                    button.close(type='button', data-dismiss='modal', aria-label='Close')
+                    span(aria-hidden='true') ×
+                .modal-body
+                    #interview-alert
+                    .input-group.input-group-md.mb-3
+                        div.input-group-prepend
+                            span(class="input-group-text" id="inputGroup-sizing-sm") Interview Title &nbsp;:
+                        input(class="form-control" id="title" type="text" name="title")
+                    .input-group.input-group-lg.mb-3
+                        #datetimepicker1.input-group.date(data-target-input='nearest')
+                            div.input-group-prepend
+                                span(class="input-group-text" id="inputGroup-sizing-sm") Interview Start :
+                            input#start.form-control.datetimepicker-input(type='text', data-target='#datetimepicker1')
+                            .input-group-append(data-target='#datetimepicker1', data-toggle='datetimepicker')
+                                .input-group-text
+                                    i.fa.fa-calendar
+                    .input-group.input-group-lg.mb-3
+                        #datetimepicker2.input-group.date(data-target-input='nearest')
+                            div.input-group-prepend
+                                span(class="input-group-text" id="inputGroup-sizing-sm") Interview End &nbsp; :
+                            input#end.form-control.datetimepicker-input(type='text', data-target='#datetimepicker2')
+                            .input-group-append(data-target='#datetimepicker2', data-toggle='datetimepicker')
+                                .input-group-text
+                                    i.fa.fa-calendar
+                    .input-group.input-group-md.mb-3
+                        div.input-group-prepend
+                            span(class="input-group-text" id="inputGroup-sizing-sm") Applicants &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: 
+                        input(class="form-control" id="userids" type="text" name="userids")
+                .modal-footer
+                    button.btn.btn-secondary(type='button', data-dismiss='modal') Close
+                    button#create-interview.btn.btn-primary(type='button') Schedule
+    #editInterview.modal.fade(tabindex='-1', role='dialog', aria-labelledby='editInterviewLabel', aria-hidden='true')
+        .modal-dialog(role='document').modal-dialog-centered
+            .modal-content
+                .modal-header
+                    h5#editInterviewLabel.modal-title Reschedule Interview
+                    button.close(type='button', data-dismiss='modal', aria-label='Close')
+                    span(aria-hidden='true') ×
+                .modal-body
+                    #edit-alert
+                    .input-group.input-group-md.mb-3
+                        div.input-group-prepend
+                            span(class="input-group-text" id="inputGroup-sizing-sm") Interview Title &nbsp;:
+                        input(class="form-control" id="title-edit" type="text" name="title-edit")
+                        input(class="hidden", id="interviewid", type="text", name="interviewid")
+                    .input-group.input-group-lg.mb-3
+                        #datetimepicker3.input-group.date(data-target-input='nearest')
+                            div.input-group-prepend
+                                span(class="input-group-text" id="inputGroup-sizing-sm") Interview Start :
+                            input#start-edit.form-control.datetimepicker-input(type='text', data-target='#datetimepicker3')
+                            .input-group-append(data-target='#datetimepicker3', data-toggle='datetimepicker')
+                                .input-group-text
+                                    i.fa.fa-calendar
+                    .input-group.input-group-lg.mb-3
+                        #datetimepicker4.input-group.date(data-target-input='nearest')
+                            div.input-group-prepend
+                                span(class="input-group-text" id="inputGroup-sizing-sm") Interview End &nbsp; :
+                            input#end-edit.form-control.datetimepicker-input(type='text', data-target='#datetimepicker4')
+                            .input-group-append(data-target='#datetimepicker4', data-toggle='datetimepicker')
+                                .input-group-text
+                                    i.fa.fa-calendar
+                .modal-footer
+                    button#delete-interview.btn.btn-danger(type='button') Delete
+                    button#edit-interview.btn.btn-primary(type='button') Reschedule
+
+    script(src="https://kit.fontawesome.com/9d18634ca5.js", crossorigin="anonymous")
+    script(src="modules/jquery/dist/jquery.min.js")
+    script(src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js")
+    script(src="modules/moment/min/moment.min.js")
+    script(src="modules/bootstrap/dist/js/bootstrap.bundle.min.js")
+    script(type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/js/tempusdominus-bootstrap-4.min.js")
+    script(src="/static/js/index.js")
